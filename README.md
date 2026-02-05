@@ -6,45 +6,89 @@ A production-ready **Distributed Expense Tracking System** built with Node.js. T
 
 ---
 
-## 🌟 Key Features
-
-* **Microservices Architecture:** 5 independent services (User, Expense, Budget, Analytics, Notification).
-* **Centralized API Gateway:** Single entry point routing requests to appropriate services.
-* **Smart Budgeting:** Real-time monitoring with automated alerts when 80% of the budget is utilized.
-* **Deep Analytics:** Spending trends, category analysis, and AI-driven insights.
-* **Security:** Stateless authentication using JSON Web Tokens (JWT).
-* **Scalability:** Each service uses its own MongoDB database (Database-per-service pattern).
+## 🌟 Project Highlights
+- **Microservices Architecture** with 5 independent services.
+- **API Gateway Pattern** for centralized request routing and security.
+- **Smart Budgeting** with real-time alerts (80% threshold).
+- **Advanced Analytics** for spending trends and daily patterns.
+- **State-of-the-art UI** with React, featuring dark mode and data exports.
 
 ---
 
 ## 🏗️ System Architecture
 
-The system uses an **API Gateway** to handle all client requests, routing them to the specific microservice. Services communicate via REST APIs.
+The system is designed with a "Database-per-service" pattern to ensure horizontal scalability and fault isolation. All traffic flows through the API Gateway, which handles authentication.
 
-    
-    Gateway --> User[User Service :3001]
-    Gateway --> Expense[Expense Service :3002]
-    Gateway --> Budget[Budget Service :3003]
-    Gateway --> Analytics[Analytics Service :3004]
-    Gateway --> Notify[Notification Service :3005]
-    
-    User --> DB1[(User DB)]
-    Expense --> DB2[(Expense DB)]
-    Budget --> DB3[(Budget DB)]
-    Analytics --> DB4[(Analytics DB)]
-    Notify --> DB5[(Notify DB)]
-🧩 Services BreakdownServicePortDescriptionAPI Gateway3000The traffic controller. Routes requests, handles errors, and manages API versions.User Service3001Handles Registration, Login, JWT issuance, and Profile management.Expense Service3002CRUD operations for expenses, category management, and filtering.Budget Service3003(Core Feature) Monitors spending limits and triggers alerts.Analytics Service3004Aggregates data to provide charts, trends, and financial insights.Notification Service3005Manages alerts (Email/SMS/Push) for budget overflows and summaries.🚀 Getting StartedPrerequisitesNode.js (v14+)MongoDB (Local or Atlas Cloud)Git1. InstallationClone the repository:Bashgit clone [https://github.com/tanzirrabby/Smart-Expenses-Tracker.git](https://github.com/tanzirrabby/Smart-Expenses-Tracker.git)
+
+
+### 🧩 Services Breakdown
+
+| Service | Port | Description |
+| :--- | :--- | :--- |
+| **API Gateway** | `3000` | The entry point. Handles routing, security, and error aggregation. |
+| **User Service** | `3001` | Manages registration, login, and JWT token issuance. |
+| **Expense Service** | `3002` | Handles all transaction CRUD operations and categorization. |
+| **Budget Service** | `3003` | Real-time budget monitoring and threshold alert logic. |
+| **Analytics Service** | `3004` | Data aggregation for trends, summaries, and spending insights. |
+| **Notification Service** | `3005` | Multi-channel delivery for alerts and weekly reports. |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+* **Node.js** (v14 or higher)
+* **MongoDB** (Local instance or MongoDB Atlas Cloud)
+* **Git**
+
+### 1. Installation & Dependencies
+Clone the repository and install dependencies for the gateway and all 5 services:
+
+```bash
+git clone [https://github.com/tanzirrabby/Smart-Expenses-Tracker.git](https://github.com/tanzirrabby/Smart-Expenses-Tracker.git)
 cd smart-expense-tracker
-2. Dependency SetupYou need to install dependencies for each service. Open your terminal and run:Bash# Install Gateway dependencies
-cd api-gateway && npm install && cd ..
 
-# Install Service dependencies
-cd user-service && npm install && cd ..
-cd expense-service && npm install && cd ..
-cd budget-service && npm install && cd ..
-cd analytics-service && npm install && cd ..
-cd notification-service && npm install && cd ..
-3. Environment ConfigurationCreate a .env file in each service folder (e.g., user-service/.env, expense-service/.env).Example .env content:Code snippetPORT=3001  # Change based on the specific service port
-MONGO_URI=mongodb+srv://<your_db_connection>
-JWT_SECRET=your_super_secret_key
-4. Running the ApplicationTo see the full system in action, you need to run all services simultaneously. Open 6 separate terminal tabs and run npm start in each folder:cd api-gateway && npm startcd user-service && npm startcd expense-service && npm startcd budget-service && npm startcd analytics-service && npm startcd notification-service && npm start🧪 API DocumentationAll requests should be sent to the API Gateway (Port 3000).🔐 AuthenticationMethodEndpointDescriptionPayloadPOST/api/auth/registerRegister User{username, email, password, currency}POST/api/auth/loginLogin{email, password}💸 ExpensesMethodEndpointDescriptionHeadersPOST/api/expensesAdd Expenseuser-id: <id>GET/api/expensesGet All Expensesuser-id: <id>GET/api/expenses/summaryGet Category Summaryuser-id: <id>📊 Budgets & AnalyticsMethodEndpointDescriptionPOST/api/budgetsSet a Monthly BudgetGET/api/analytics/insightsGet AI Spending InsightsGET/api/analytics/trendsGet 6-month Spending Trend🛠️ Tech Stack & Concepts DemonstratedRuntime: Node.jsFramework: Express.jsDatabase: MongoDB (Mongoose ODM)Authentication: JWT (JSON Web Tokens)Patterns: Microservices, API Gateway, Database-per-Service, Event-Driven Architecture.
+# Quick install for all services
+for dir in api-gateway user-service expense-service budget-service analytics-service notification-service; do
+  cd $dir && npm install && cd ..
+done
+
+2. Environment Configuration
+Create a .env file in each service folder with your credentials:
+
+Code snippet
+PORT=300x                     # Port specific to the service
+MONGO_URI=mongodb+srv://...    # Your MongoDB connection string
+JWT_SECRET=your_secret_key    # Used for authentication
+3. Running the System
+Open separate terminals for each service and run:
+
+Bash
+npm start
+Alternatively, use the provided start-all.ps1 (PowerShell) or setup.sh (Linux/Mac) scripts in the root directory.
+
+API Reference
+All requests must be directed to the Gateway (Port 3000). Use the included Postman-Collection.json for testing.
+
+Auth Endpoints
+POST /api/auth/register - Create a new account.
+
+POST /api/auth/login - Authenticate and receive JWT.
+
+Transaction Endpoints
+POST /api/expenses - Create income or expense (Header: user-id).
+
+GET /api/expenses - Fetch history with date/type filtering.
+
+GET /api/analytics/insights - Get AI-driven spending patterns.
+
+Tech Stack & Patterns
+Backend: Node.js, Express.js
+
+Database: MongoDB, Mongoose ODM
+
+Frontend: React 19, Vite, Axios
+
+Auth: JSON Web Tokens (JWT)
+
+Patterns: Single Responsibility, Reverse Proxy, Stateless Auth, Decentralized Data.
