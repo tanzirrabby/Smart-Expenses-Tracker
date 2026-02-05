@@ -489,5 +489,6 @@ This project is open source and available under the MIT License.
 5. Security considerations in your implementation?
 
 Good luck with your job search! 🚀
-#   S m a r t - E x p e n s e s - T r a c k e r  
+#   S m a r t - E x p e n s e s - T r a c k e r 
+ 
  
