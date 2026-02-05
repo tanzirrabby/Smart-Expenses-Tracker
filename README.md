@@ -21,9 +21,6 @@ A production-ready **Distributed Expense Tracking System** built with Node.js. T
 
 The system uses an **API Gateway** to handle all client requests, routing them to the specific microservice. Services communicate via REST APIs.
 
-```mermaid
-graph TD
-    Client[Client (Web/Mobile)] --> Gateway[API Gateway :3000]
     
     Gateway --> User[User Service :3001]
     Gateway --> Expense[Expense Service :3002]
